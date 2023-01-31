@@ -21,3 +21,33 @@
 - 올바르다고 생각하는 코드를 입력하여 테스트를 통과시킨다.
 
 ---
+
+## 3장 : 모두를 위한 평등
+
+### 값 객체
+- 값 객체 : 한번 생성자를 통해 설정된 후에는 결코 변하지 않는 객체
+- 값 객체에 대한 연산을 수행하면, 값은 변하지 않고 새로운 값 객체가 생성된다.
+
+### 무엇을 했는가?
+```java
+    @Test
+    @DisplayName("금액이 같아야 동등한 Dollar다.")
+    public void testEquality() {
+        assertThat(new Dollar(5)).isEqualTo(new Dollar(5));
+        assertThat(new Dollar(5)).isNotEqualTo(new Dollar(6));
+    }
+```
+```java
+    @Override
+    public boolean equals(Object obj) {
+        Dollar dollar = (Dollar) obj;
+        return amount == dollar.amount;
+    }
+```
+- Dollar의 equals 메서드를 오버라이드하여, 1차적으로 동등성을 정의했다.
+- 어떻게 리팩토링을 할 지 전혀 감이 오지 않을 때는 '삼각측량'을 사용한다. 두가지 이상의 테스트 코드를 통해,
+무엇을 일반화해야할 지 찾아내는 기법이다.
+- 물론, 테스트 사이의 중복을 제거하고 일반적인 해법을 구할 방법이 보이면 그냥 그 방법대로 구현하면 된다.
+- 이 equals 오버라이드에도 한계(null, 다른 타입 여부, ...)가 존재하지만 이는 이후로 미룬다.
+
+---
