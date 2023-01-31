@@ -19,4 +19,10 @@ class DollarTest {
         assertThat(product.amount).isEqualTo(15);
     }
 
+    @Test
+    @DisplayName("금액이 같아야 동등한 Dollar다.")
+    public void testEquality() {
+        assertThat(new Dollar(5)).isEqualTo(new Dollar(5));
+    }
+
 }
