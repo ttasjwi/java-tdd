@@ -2,8 +2,7 @@ package com.ttasjwi.money.domain;
 
 public class Dollar {
 
-    // TODO: amount를 private로 만들기
-    int amount;
+    private int amount;
 
     public Dollar(int amount) {
         this.amount = amount;
