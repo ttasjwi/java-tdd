@@ -8,13 +8,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DollarTest {
 
     @Test
-    @DisplayName("$5에 2를 곱하면 $10이 되어야 한다.")
+    @DisplayName("times(...) -> 금액을 정수배한 새로운 Dollar를 반환한다.")
     public void testMultiplication() {
-        //given
         Dollar five = new Dollar(5);
-        five.times(2);
 
-        assertThat(five.amount).isEqualTo(10);
+        Dollar product = five.times(2);
+        assertThat(product.amount).isEqualTo(10);
+
+        product = five.times(3);
+        assertThat(product.amount).isEqualTo(15);
     }
 
 }
