@@ -8,7 +8,7 @@ public class Dollar extends Money {
 
     @Override
     public Money times(int multiplier) {
-        return new Dollar(amount * multiplier, currency);
+        return new Money(amount * multiplier, currency);
     }
 
     //TODO : $5 + 10CHF = $10$ (환율이 2:1 인 경우)
