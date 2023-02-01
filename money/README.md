@@ -115,3 +115,39 @@ class FrancTest {
 - 일단 돌아가는 코드를 빠르게 만드는 것이 중요.
 
 ---
+
+## 6장 : 돌아온 '모두를 위한 평등'
+```java
+    @Test
+    @DisplayName("금액이 같아야 동등한 Dollar다.")
+    public void testEquality() {
+        assertThat(new Dollar(5)).isEqualTo(new Dollar(5));
+        assertThat(new Dollar(5)).isNotEqualTo(new Dollar(6));
+        assertThat(new Franc(5)).isEqualTo(new Franc(5));
+        assertThat(new Franc(5)).isNotEqualTo(new Franc(6));
+    }
+```
+```java
+package com.ttasjwi.money.domain;
+
+public class Money {
+
+    protected int amount;
+
+    public Money(int amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Money money = (Money) obj;
+        return amount == money.amount;
+    }
+}
+```
+- 중복 코드를 제거를 위해 상위 클래스인 Money를 만들었다.
+- 생성자 중복을 해결하기 위해, Money에 protected 필드인 amount 두기
+- equals 중복을 해결하기 위해 Money에 equals 오버라이드
+- 하지만 다른 타입의 통화와 비교에 대한 정의가 이뤄지지 않음 
+
+---
