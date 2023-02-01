@@ -20,4 +20,11 @@ class MoneyTest {
         assertThat(new Franc(5)).isNotEqualTo(new Dollar(5));
     }
 
+    @Test
+    @DisplayName("통화(Currency) 종류 테스트")
+    public void testCurrency() {
+        assertThat(Money.dollar(1).currency()).isEqualTo("USD");
+        assertThat(Money.franc(1).currency()).isEqualTo("CHF");
+    }
+
 }
