@@ -76,3 +76,42 @@
 - 하지만, 앞서 동등성 정의를 잘못했다면 두 개의 테스트가 모두 깨졌을 것이다.
 
 ---
+
+## 5장 : 솔직히 말하자면
+
+### 무엇을 했는가?
+```java
+
+class FrancTest {
+
+    @Test
+    @DisplayName("times(...) -> 금액을 정수배한 새로운 Franc를 반환한다.")
+    public void testMultiplication() {
+        Franc five = new Franc(5);
+        assertThat(five.times(2)).isEqualTo(new Franc(10));
+        assertThat(five.times(3)).isEqualTo(new Franc(15));
+    }
+
+    @Test
+    @DisplayName("금액이 같아야 동등한 Franc다.")
+    public void testEquality() {
+        assertThat(new Franc(5)).isEqualTo(new Franc(5));
+        assertThat(new Franc(5)).isNotEqualTo(new Franc(6));
+    }
+
+}
+```
+- 큰 기능을 만드는 것을 공략할 수 없다.
+- 일단 중복을 만들고, 고쳐서 테스트를 작성.
+- 심지어 모델 코드를 복사해서 복사하고, 수정해서 테스트를 통과했다.
+- DollarTest 복사하여 FrancTest 생성
+- Dollar 코드를 Franc로 바꿈
+- 컴파일이 안됨 -> Dollar 복사 -> Franc 코드 생성
+- 테스크 작동 성공
+
+### 우리는 무엇을 해야하는가?
+- 돌아가게 만들고, 올바르게 만들어라.
+- 적절한 시기에 적절한 설계를.
+- 일단 돌아가는 코드를 빠르게 만드는 것이 중요.
+
+---
