@@ -217,3 +217,20 @@ public abstract class Money {
   - 하지만 또 그 상황에서 중단하고, 다른 일로 새지는 말라고 했다.
 
 ---
+
+## 10장 : 흥미로운 시간
+- times를 올리기 위한 긴 여정의 시작
+- Franc의 times에서 Money로 반환할 수는 없을까? => 구체 클래스화가 필요하다. -> times에서 Money 인스턴스 반환하도록 함
+- 구체클래스로 만들기 위해 Money의 times를 스텁으로 구현(null) 반환
+- 하지만 이렇게 만들어 놓고 보니 기존 테스트에서 빨간 막대가 뜸.
+- 디버그를 위해 toString() 을 오버라이드
+- 디버그를 해보니, currency와 amount는 동일하지만 동등하지 않다고 되어 있음. equals 오버라이드에 문제가 있었던 것.
+- **equals를 어떻게 고칠지 생각하기 위해 테스트를 작성함**
+- equals를 고치기 위해 times에서 반환을 일단 다시 Franc 인스턴스를 통해 하도록 함
+- equals를 고치고, 테스트 초록막대화
+- Franc의 times에서 다시 Money 로 반환하도록 함
+- Dollar의 times 역시 Money 로 반환하도록 함
+- Money로 Dollar, Franc의 times를 올림
+- 이제 불필요한 Dollar, Franc를 올릴 준비가 거의 다 됐다.
+
+---
