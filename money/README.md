@@ -151,3 +151,34 @@ public class Money {
 - 하지만 다른 타입의 통화와 비교에 대한 정의가 이뤄지지 않음 
 
 ---
+
+## 7장 : 사과와 오렌지
+
+### 동등성 재정의
+```java
+    @Test
+    @DisplayName("금액이 같고 같은 클래스여야 동등하다.")
+    public void testEquality() {
+        assertThat(new Dollar(5)).isEqualTo(new Dollar(5));
+        assertThat(new Dollar(5)).isNotEqualTo(new Dollar(6));
+        assertThat(new Franc(5)).isEqualTo(new Franc(5));
+        assertThat(new Franc(5)).isNotEqualTo(new Franc(6));
+        assertThat(new Franc(5)).isNotEqualTo(new Dollar(5));
+    }
+```
+```java
+    @Override
+    public boolean equals(Object obj) {
+        Money money = (Money) obj;
+        return amount == money.amount && getClass() == money.getClass();
+    }
+```
+- 결함을 끄집어내서 테스트에 담아냈다.
+- 당장은 금액과 클래스가 동일하면 동등하도록 정의했다.
+- 자바 객체 용어를 사용하기보다 통화(currency) 개념을 도입해서 비교하면 좋을 것 같지만, 당장 통화 개념을 도입할 동기가 있기 전에는 더 많은
+설계를 도입하지 않기로 했다.
+
+---
+
+
+---

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MoneyTest {
 
     @Test
-    @DisplayName("금액이 같아야 동등한 Dollar다.")
+    @DisplayName("금액이 같고 같은 클래스여야 동등하다.")
     //TODO: null 또는 다른 객체들에 대한 동등성은?
     //TODO: Dollar, Franc의 비교
     //TODO: hashCode() 는?
@@ -17,6 +17,7 @@ class MoneyTest {
         assertThat(new Dollar(5)).isNotEqualTo(new Dollar(6));
         assertThat(new Franc(5)).isEqualTo(new Franc(5));
         assertThat(new Franc(5)).isNotEqualTo(new Franc(6));
+        assertThat(new Franc(5)).isNotEqualTo(new Dollar(5));
     }
 
 }

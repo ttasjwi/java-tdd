@@ -15,11 +15,4 @@ class FrancTest {
         assertThat(five.times(3)).isEqualTo(new Franc(15));
     }
 
-    @Test
-    @DisplayName("금액이 같아야 동등한 Franc다.")
-    public void testEquality() {
-        assertThat(new Franc(5)).isEqualTo(new Franc(5));
-        assertThat(new Franc(5)).isNotEqualTo(new Franc(6));
-    }
-
 }

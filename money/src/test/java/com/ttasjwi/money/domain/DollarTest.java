@@ -15,14 +15,4 @@ class DollarTest {
         assertThat(five.times(3)).isEqualTo(new Dollar(15));
     }
 
-    @Test
-    @DisplayName("금액이 같아야 동등한 Dollar다.")
-
-    //TODO: null 또는 다른 객체들에 대한 동등성은?
-    //TODO: hashCode() 는?
-    public void testEquality() {
-        assertThat(new Dollar(5)).isEqualTo(new Dollar(5));
-        assertThat(new Dollar(5)).isNotEqualTo(new Dollar(6));
-    }
-
 }
