@@ -3,8 +3,7 @@ package com.ttasjwi.money.domain;
 public class Franc extends Money {
 
     public Franc(int amount, String currency) {
-        super(amount);
-        this.currency = currency;
+        super(amount, currency);
     }
 
     @Override
