@@ -3,17 +3,18 @@ package com.ttasjwi.money.domain;
 public abstract class Money {
 
     protected int amount;
+    protected String currency;
 
     public Money(int amount) {
         this.amount = amount;
     }
 
     public static Money dollar(int amount) {
-        return new Dollar(amount);
+        return new Dollar(amount, null);
     }
 
     public static Money franc(int amount) {
-        return new Franc(amount);
+        return new Franc(amount, null);
     }
 
     public abstract Money times(int multiplier);
