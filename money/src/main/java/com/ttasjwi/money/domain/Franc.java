@@ -11,8 +11,4 @@ public class Franc extends Money {
         return new Franc(amount * multiplier, currency);
     }
 
-    @Override
-    public String currency() {
-        return currency;
-    }
 }
