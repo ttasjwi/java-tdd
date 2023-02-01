@@ -2,8 +2,11 @@ package com.ttasjwi.money.domain;
 
 public class Dollar extends Money {
 
+    private String currency;
+
     public Dollar(int amount) {
         super(amount);
+        currency = "USD";
     }
 
     @Override
@@ -13,7 +16,7 @@ public class Dollar extends Money {
 
     @Override
     public String currency() {
-        return "USD";
+        return currency;
     }
 
     //TODO : $5 + 10CHF = $10$ (환율이 2:1 인 경우)
