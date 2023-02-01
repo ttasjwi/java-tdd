@@ -15,4 +15,10 @@ class FrancTest {
         assertThat(five.times(3)).isEqualTo(Money.franc(15));
     }
 
+    @Test
+    @DisplayName("금액이 같고 currency가 같으면 동등하다.")
+    public void testClassEquality() {
+        assertThat(new Franc(10, "CHF")).isEqualTo(new Money(10, "CHF"));
+    }
+
 }

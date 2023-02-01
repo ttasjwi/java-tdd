@@ -1,6 +1,6 @@
 package com.ttasjwi.money.domain;
 
-public abstract class Money {
+public class Money {
 
     protected int amount;
     protected String currency;
@@ -18,7 +18,9 @@ public abstract class Money {
         return new Franc(amount, "CHF");
     }
 
-    public abstract Money times(int multiplier);
+    public Money times(int multiplier) {
+        return null;
+    }
 
     public String currency() {
         return currency;
@@ -27,7 +29,11 @@ public abstract class Money {
     @Override
     public boolean equals(Object obj) {
         Money money = (Money) obj;
-        return amount == money.amount && getClass() == money.getClass();
+        return amount == money.amount && currency().equals(money.currency);
     }
 
+    @Override
+    public String toString() {
+        return amount + " " + currency;
+    }
 }
