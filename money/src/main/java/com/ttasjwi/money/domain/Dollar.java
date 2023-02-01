@@ -4,12 +4,12 @@ public class Dollar extends Money {
 
     public Dollar(int amount, String currency) {
         super(amount);
-        this.currency = "USD";
+        this.currency = currency;
     }
 
     @Override
     public Money times(int multiplier) {
-        return new Dollar(amount * multiplier, null);
+        return new Dollar(amount * multiplier, "USD");
     }
 
     @Override
