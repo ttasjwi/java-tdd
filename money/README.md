@@ -180,5 +180,29 @@ public class Money {
 
 ---
 
+## 8장 : 객체 만들기
+```java
+package com.ttasjwi.money.domain;
+
+public abstract class Money {
+    
+    // 생략
+
+    public static Money dollar(int amount) {
+        return new Dollar(amount);
+    }
+
+    public static Money franc(int amount) {
+        return new Franc(amount);
+    }
+
+    public abstract Money times(int multiplier);
+    
+    // 생략
+}
+```
+- Money에 정적 팩토리 클래스를 생성하여, Money를 통해서 인스턴스를 생성하고 클라이언트 측에 구체 클래스를 은닉
+- Money를 추상클래스화 하고, 각각의 구체 클래스들의 메서드 선언부들을 추상 클래스에 맞춤
+- 이렇게 놓고보니 기존의 구체클래스 테스트들이 불필요해져감을 인식하지만, 그냥 뒀다.
 
 ---
