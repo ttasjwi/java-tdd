@@ -1,11 +1,10 @@
 package com.ttasjwi.money.domain;
 
-public class Franc {
+public class Franc extends Money {
 
-    private int amount;
 
     public Franc(int amount) {
-        this.amount = amount;
+        super(amount);
     }
 
     public Franc times(int multiplier) {
