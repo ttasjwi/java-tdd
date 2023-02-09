@@ -46,6 +46,13 @@ class MoneyTest {
         assertThat(result).isEqualTo(Money.dollar(1));
     }
 
+    @Test
+    @DisplayName("2 프랑을 1 달러로 환전")
+    public void testReduceDifferentCurrency() {
+        Bank bank = new Bank();
+        Money result = bank.reduce(Money.franc(2), "USD");
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
 
     @Test
     @DisplayName("times(...) -> 금액을 정수배한 새로운 Money를 반환한다.")
