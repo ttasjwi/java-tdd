@@ -8,6 +8,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MoneyTest {
 
     @Test
+    @DisplayName("plus(...) -> 두 금액을 합한 새로운 Money를 반환한다.")
+    public void testSimpleAddition() {
+        Money sum = Money.dollar(5).plus(Money.dollar(5));
+        assertThat(sum).isEqualTo(Money.dollar(10));
+    }
+
+    @Test
     @DisplayName("times(...) -> 금액을 정수배한 새로운 Money를 반환한다.")
     public void testMultiplication() {
         Money five = Money.dollar(5);

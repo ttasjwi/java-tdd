@@ -18,6 +18,11 @@ public class Money {
         return new Money(amount, "CHF");
     }
 
+    //TODO : $5 + 10CHF = $10$ (환율이 2:1 인 경우)
+    public Money plus(Money added) {
+        return new Money(amount + added.amount, currency);
+    }
+
     public Money times(int multiplier) {
         return new Money(amount * multiplier, currency);
     }
@@ -26,7 +31,6 @@ public class Money {
         return currency;
     }
 
-    //TODO : $5 + 10CHF = $10$ (환율이 2:1 인 경우)
     //TODO : Money의 반올림
 
     @Override
