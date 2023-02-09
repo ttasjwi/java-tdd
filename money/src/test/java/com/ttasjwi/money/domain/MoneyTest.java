@@ -39,6 +39,15 @@ class MoneyTest {
     }
 
     @Test
+    @DisplayName("Bank의 reduce를 통해 Money를 Money로 환산한다.")
+    public void testReduceMoney() {
+        Bank bank = new Bank();
+        Money result = bank.reduce(Money.dollar(1), "USD");
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
+
+
+    @Test
     @DisplayName("times(...) -> 금액을 정수배한 새로운 Money를 반환한다.")
     public void testMultiplication() {
         Money five = Money.dollar(5);

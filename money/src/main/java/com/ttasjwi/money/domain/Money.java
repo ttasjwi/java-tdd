@@ -43,4 +43,9 @@ public class Money implements Expression {
     public String toString() {
         return amount + " " + currency;
     }
+
+    //TODO : stub
+    public Money reduce(String to) {
+        return this;
+    }
 }
