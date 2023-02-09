@@ -20,7 +20,7 @@ public class Money implements Expression {
 
     //TODO : $5 + 10CHF = $10$ (환율이 2:1 인 경우)
     public Expression plus(Money added) {
-        return new Money(amount + added.amount, currency);
+        return new Sum(this, added);
     }
 
     public Money times(int multiplier) {

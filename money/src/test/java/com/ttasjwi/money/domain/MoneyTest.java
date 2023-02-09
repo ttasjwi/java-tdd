@@ -20,6 +20,16 @@ class MoneyTest {
     }
 
     @Test
+    @DisplayName("plus는 두 금액의 합에 해당하는 Sum을 반환한다.")
+    public void testPlusReturnsSum() {
+        Money five = Money.dollar(5);
+        Expression result = five.plus(five);
+        Sum sum = (Sum) result;
+        assertThat(sum.augend).isEqualTo(five);
+        assertThat(sum.addend).isEqualTo(five);
+    }
+
+    @Test
     @DisplayName("times(...) -> 금액을 정수배한 새로운 Money를 반환한다.")
     public void testMultiplication() {
         Money five = Money.dollar(5);
