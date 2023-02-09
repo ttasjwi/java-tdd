@@ -30,6 +30,15 @@ class MoneyTest {
     }
 
     @Test
+    @DisplayName("Bank의 reduce를 통해 금액의 합 Sum을 Money로 환산한다.")
+    public void testReduceSum() {
+        Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
+        Bank bank = new Bank();
+        Money result = bank.reduce(sum, "USD");
+        assertThat(result).isEqualTo(Money.dollar(7));
+    }
+
+    @Test
     @DisplayName("times(...) -> 금액을 정수배한 새로운 Money를 반환한다.")
     public void testMultiplication() {
         Money five = Money.dollar(5);
