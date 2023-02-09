@@ -250,3 +250,32 @@ public abstract class Money {
 - 기존의 소스 구조에서는 필요했지만 새로운 구조에서는 필요 없게된 테스트 제거
 
 ---
+
+## 12장 : 드디어, 더하기
+```java
+    public void testSimpleAddition() {
+        Money sum = Money.dollar(5).plus(Money.dollar(5));
+        assertThat(sum).isEqualTo(Money.dollar(10));
+    }
+```
+- $5 + 10CHF를 바로 구현하려 드는 것은 매우 복잡하고 큰 문제다.
+- 일단 작은 문제인, 5$, 5$의 합산을 먼저 구현한다.
+```java
+    public void testSimpleAddition() {
+        Money five = Money.dollar(5);
+        Expression sum = five.plus(five);
+
+        Bank bank = new Bank();
+        Money reduced = bank.reduce(sum, "USD");
+
+        assertThat(reduced).isEqualTo(Money.dollar(10));
+    }
+```
+- 우리의 계산은 결국 다른 통화의 금액의 합산도 가능하게 해야한다.
+- 일단 Money에서 다른 종류의 통화를 합산하여 Money로 반환하는 것은 복잡하므로, 합산의 결과물로 별도로 Expression을 만들고
+이를 Money로 환전 처리하는 책임을 Bank에게 위임한다.
+  - 우리가 하려고 하는 일을 핵심 객체가 모르게 하여, 오랫동안 핵심 객체를 유연하게 한다.
+- 생각의 흐름대로 테스트를 재작성하고, 컴파일이 되게 한다.
+- 빨간 막대가 나온 것을 확인하고 스텁을 구현하여 초록 막대가 나오게 한다.
+
+---

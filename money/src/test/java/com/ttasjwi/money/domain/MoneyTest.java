@@ -8,10 +8,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MoneyTest {
 
     @Test
-    @DisplayName("plus(...) -> 두 금액을 합한 새로운 Money를 반환한다.")
+    @DisplayName("plus(...)를 통해 같은 통화의 Money를 합산하기")
     public void testSimpleAddition() {
-        Money sum = Money.dollar(5).plus(Money.dollar(5));
-        assertThat(sum).isEqualTo(Money.dollar(10));
+        Money five = Money.dollar(5);
+        Expression sum = five.plus(five);
+
+        Bank bank = new Bank();
+        Money reduced = bank.reduce(sum, "USD");
+
+        assertThat(reduced).isEqualTo(Money.dollar(10));
     }
 
     @Test
