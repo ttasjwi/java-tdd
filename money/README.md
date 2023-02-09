@@ -279,3 +279,74 @@ public abstract class Money {
 - 빨간 막대가 나온 것을 확인하고 스텁을 구현하여 초록 막대가 나오게 한다.
 
 ---
+
+## 13장 : 진짜로 만들기
+```java
+    @Test
+    @DisplayName("plus는 두 금액의 합에 해당하는 Sum을 반환한다.")
+    public void testPlusReturnsSum() {
+        Money five = Money.dollar(5);
+        Expression result = five.plus(five);
+        Sum sum = (Sum) result;
+        assertThat(sum.augend).isEqualTo(five);
+        assertThat(sum.addend).isEqualTo(five);
+    }
+```
+- 두 금액의 합인 Sum을 정의한 테스트를 작성하고, 컴파일이 되도록 Sum 클래스를 만들었다.
+- 프로퍼티로 augended 와 addend를 정의
+```java
+
+    public Money reduce(Expression source, String to) {
+        Sum sum = (Sum) source;
+        int amount = sum.augend.amount + sum.addend.amount;
+        return new Money(amount, to);
+    }
+```
+- 우리가 만든 Sum을 Bank에서 Moneyfh reduce할 수 있도록,
+명시적인 형변환을 통해 Sum으로 변환하고, Sum의 프로퍼티를 통해 Money를 생성하여 반환하게 함.
+```java
+    // Sum
+    public Money reduce(String to) {
+        int amount = augend.amount + addend.amount;
+        return new Money(amount, to);
+    }
+    // Bank
+    public Money reduce(Expression source, String to) {
+        Sum sum = (Sum) source;
+        return sum.reduce(to);
+    }
+```
+- Bank에서 캐스팅을 통해 구현했던 작업을 Sum의 적당한 자리로 구현을 이동했다.
+```java
+    public void testReduceMoney() {
+        Bank bank = new Bank();
+        Money result = bank.reduce(Money.dollar(1), "USD");
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
+```
+```java
+    public Money reduce(Expression source, String to) {
+        if (source instanceof Money) {
+            return ((Money) source).reduce(to);
+        }
+        Sum sum = (Sum) source;
+        return sum.reduce(to);
+    }
+```
+- 기존의 Bank는 reduce를 할 때, Sum만을 Money로 reduce할 수 있었다.
+- 이제 Money도 reduce할 수 있게 코드를 고쳐야한다. 어거지로 명시적인 형변환을 통해 돌아가게 만든다.
+```java
+public interface Expression {
+
+    Money reduce(String to);
+}
+```
+```java
+    public Money reduce(Expression source, String to) {
+        return source.reduce(to);
+    }
+```
+- Expression에 reduce 메서드를 정의하고 하위의 Money, Sum에서 이를 구현하게 한다.
+- 이제 Expression 인터페이스를 통해 공통적으로 reduce 메시지를 보내서, 구현체들이 자신의 나름대로 메서드를 수행하게 할 수 있다.(다형성)
+
+---
