@@ -234,3 +234,19 @@ public abstract class Money {
 - 이제 불필요한 Dollar, Franc를 올릴 준비가 거의 다 됐다.
 
 ---
+
+## 11장 : 모든 악의 근원
+```java
+
+    public static Money dollar(int amount) {
+        return new Money(amount, "USD");
+    }
+
+    public static Money franc(int amount) {
+        return new Money(amount, "CHF");
+    }
+```
+- 클래스 상의 Dollar, Franc 구체 코드를 제거하고, 이들 구체 클래스들을 제거
+- 기존의 소스 구조에서는 필요했지만 새로운 구조에서는 필요 없게된 테스트 제거
+
+---
