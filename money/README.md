@@ -350,3 +350,115 @@ public interface Expression {
 - 이제 Expression 인터페이스를 통해 공통적으로 reduce 메시지를 보내서, 구현체들이 자신의 나름대로 메서드를 수행하게 할 수 있다.(다형성)
 
 ---
+
+## 14장 : 바꾸기
+```java
+    @Test
+    @DisplayName("2 프랑을 1 달러로 환전")
+    public void testReduceDifferentCurrency() {
+        Bank bank = new Bank();
+        Money result = bank.reduce(Money.franc(2), "USD");
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
+```
+```java
+    @Override
+    public Money reduce(String to) {
+        int rate = (currency.equals("CHF") && to.equals("USD"))
+                ? 2
+                : 1;
+        return new Money(amount / rate, to);
+    }
+```
+- 어거지로, Money의 reduce에서 CHF를 USD로 2:1로 환전하게 함
+```java
+public interface Expression {
+    Money reduce(Bank bank, String to);
+}
+```
+```java
+    @Override
+    public Money reduce(Bank bank, String to) {
+        int rate = bank.rate(currency, to);
+        return new Money(amount / rate, to);
+    }
+```
+```java
+    public int rate(String currency, String to) {
+        return (currency.equals("CHF") && to.equals("USD"))
+                ? 2
+                : 1;
+    }
+```
+- Money가 단독으로 환율을 알고 있는 것은 책임이 너무 무거워지고 응집도가 떨어짐
+- Bank가 환율을 알고 있을 책임을 가지게 하고, reduce의 메서드 시그니처를 수정
+```java
+
+public class Bank {
+
+    private final Map<Pair, Integer> rates = new HashMap<>();
+
+    private static class Pair {
+        private String from;
+        private String to;
+
+        public Pair(String from, String to) {
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            Pair pair = (Pair) o;
+            return from.equals(pair.from) && to.equals(pair.to);
+        }
+
+        //TODO: Stub
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+    }
+
+    public void addRate(String from, String to, int rate) {
+        rates.put(new Pair(from, to), rate);
+    }
+
+    public Money reduce(Expression source, String to) {
+        return source.reduce(this, to);
+    }
+
+    public int rate(String currency, String to) {
+        return (currency.equals(to))
+                ? 1
+                : rates.get(new Pair(currency, to));
+    }
+}
+```
+```java
+    @Test
+    @DisplayName("2 프랑을 1 달러로 환전")
+    public void testReduceDifferentCurrency() {
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Money result = bank.reduce(Money.franc(2), "USD");
+        assertThat(result).isEqualTo(Money.dollar(1));
+    }
+
+    @Test
+    @DisplayName("같은 요소가 들어있는 배열의 동등성 테스트")
+    public void testArrayEquals() {
+        assertThat(new Object[]{"abc"}).isEqualTo(new Object[]{"abc"});
+    }
+
+    @Test
+    @DisplayName("같은 통화로 환전하면 환율은 1이다.")
+    public void testIdentityRate() {
+        assertThat(new Bank().rate("USD", "USD")).isEqualTo(1);
+    }
+```
+- java의 오퍼레이션에 대한 가정을 검사하기 위해 테스트 작성(객체 배열의 동등성)
+- 별도의 테스트 없이, Bank의 기능을 돕기 위한 private Helper 클래스 Pair 생성
+- 리팩터링을 하다가 실수를 했고(같은 통화 환전), 이 문제를 분리하기 위해 또 하나의 테스트를 작성해가면서 전진
+
+---
