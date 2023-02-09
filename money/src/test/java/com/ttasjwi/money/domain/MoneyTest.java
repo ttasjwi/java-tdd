@@ -50,8 +50,21 @@ class MoneyTest {
     @DisplayName("2 프랑을 1 달러로 환전")
     public void testReduceDifferentCurrency() {
         Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
         Money result = bank.reduce(Money.franc(2), "USD");
         assertThat(result).isEqualTo(Money.dollar(1));
+    }
+
+    @Test
+    @DisplayName("같은 요소가 들어있는 배열의 동등성 테스트")
+    public void testArrayEquals() {
+        assertThat(new Object[]{"abc"}).isEqualTo(new Object[]{"abc"});
+    }
+
+    @Test
+    @DisplayName("같은 통화로 환전하면 환율은 1이다.")
+    public void testIdentityRate() {
+        assertThat(new Bank().rate("USD", "USD")).isEqualTo(1);
     }
 
     @Test
